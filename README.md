@@ -40,7 +40,7 @@ To eliminate version incompatibilities and simplify setup, Ref.creator is availa
 <ins>**Step 1: Pull the Docker Image**</ins>   
 To download the [Docker image](https://hub.docker.com/r/cedkb/refcreator), open your terminal and run the following command:
 ```
-docker pull cedkb/refcreator:latest
+docker pull cedkb/refcreator:0.1
 ```
 
 <ins>**Step 2: Run Docker Container**</ins>    
@@ -53,7 +53,7 @@ where
 - `{home_path}` is the path to an empty folder on your host machine.
 For example:
 ``` 
-docker run --name refcreator_test --workdir /home/refcreator -it --mount type=bind,src=C:\Users\Cedric\Documents\DockerVolumes\refcreator,dst=/home/refcreator/input cedkb/refcreator:latest
+docker run --name refcreator_test --workdir /home/refcreator -it --mount type=bind,src=C:\Users\Cedric\Documents\DockerVolumes\refcreator,dst=/home/refcreator/input cedkb/refcreator:0.1
 ```
 *Note: Run the command as a single line.*
 
@@ -63,7 +63,7 @@ Once the container is up, navigate to the folder specified by `{home_path}` and 
 <ins>**Step 4: Run the Pipeline**</ins>    
 After successfully copying and setting the input data, execute the following command inside the Docker container
 ```
-python3 RefCreator.py
+python RefCreator.py
 ```
 
 ### Output
