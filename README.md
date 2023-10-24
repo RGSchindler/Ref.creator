@@ -1,9 +1,9 @@
 # Ref.creator
-...
-
+![Ref.creator pipeline](overview.png)
 
 ## Description
-...
+Ref.creator is a pipeline for the creation of de novo assembled reference files from basecalled long-read sequencing data. It efficiently handles demultiplexing, quality control, and assembly tasks. Designed to expand the [DuBa.flow Pipeline](https://github.com/RGSchindler/DuBA.flow), Ref.creator also works as a standalone solution for small ONT sequence assemblies. Packaged within a Docker container, it offers users a reliable and reproducible environment, simplifying both deployment and operation.
+
 
 ### Tested
 Ref.creator was tested using Python version 3.11.4, Miniconda version 23.9.0 and Docker version 24.0.2.  It employs the subsequent software packages:
@@ -19,19 +19,12 @@ Ref.creator was tested using Python version 3.11.4, Miniconda version 23.9.0 and
 ## Getting Started
 ### Input
 **Directory Structure**    
-The input directory for Ref.creator should be organized as follows:
-``` bash
-.
-├── IndexCombination.tsv
-├── input.fastq.gz
-```
-
-Where
-- `input.fastq.gz` is the compressed file containing your basecalled data.
-- `IndexCombination.tsv` and `references.tsv` are metadata files in Tab-Separated Value (TSV) format.
+The input directory for Ref.creator should contain:
+- `input.fastq.gz` - the compressed file containing your basecalled data.
+- `IndexCombination.tsv` - metafile containing the information for demultiplexing in tab-separated value (TSV) format.
   
 
-Here, the `IndexCombination.tsv` file should be structured as depicted below
+Here, the `IndexCombination.tsv` file should be structured as shown below
 |SampleID |	FwIndex | FwPrimer | RvIndex | RvPrimer |
 |---------|---------|----------|---------|----------|
 |S001	|AAGAAAGTTGTCGGTGTCTTTGTG	|CCCAGTCACGACGTTGTAAAACG	|AAGAAAGTTGTCGGTGTCTTTGTG	|AGCGGATAACAATTTCACACAGG
@@ -74,16 +67,17 @@ python3 RefCreator.py
 ```
 
 ### Output
-...
-  
-**Additional Files**  
-...
+Upon successful completion of the Ref.creator program, an `output` folder will be generated at the predefined `{home_path}`. Within this directory, you'll find a subfolder dedicated to each sample. Each of these subfolders includes the assembled references file labeled as `{sample_id}.fasta`, along with supplementary assembly files:
+
+- `self_mapping.paf` - contains the results from using *minimap2* to map filtered nanopore reads onto themselves, highlighting overlaps between reads. The file is written in the [Pairwise mApping Format](https://github.com/lh3/miniasm/blob/master/PAF.md)   
+- `raw_assembly.gfa` - assembly output from *miniasm*, writen as a column based file in [Graphical Fragment Assembly Format](https://github.com/GFA-spec/GFA-spec). 
+- `cleaned_assembly.gfa` - cleaned and polished assembly *gfa* file that is created via *minipolish*. It includes read coverage and reduces/avoids introduction of gaps into the assembly.
 
 ## Publication
 Rojas, A. A. R., Brinkmann, C. K., Köbel, T. S., & Schindler, D. (2023). DuBA.flow – A dual barcode amplicon sequencing workflow for efficient and highly parallelized long-read sequencing-based DNA validation.
 
 ## License
-This is a repository written under the [CC BY-NC-SA 4.0 license](https://creativecommons.org/licenses/by-nc-sa/4.0/)
+This repository is written under the [CC BY-NC-SA 4.0 license](https://creativecommons.org/licenses/by-nc-sa/4.0/)
 
 ## References
 Krehenwinkel, H., Pomerantz, A., Henderson, J. B., Kennedy, S. R., Lim, J. Y., Swamy, V., Shoobridge, J. D., Graham, N., Patel, N. H., Gillespie, R. G., & Prost, S. (2019). Nanopore sequencing of long ribosomal DNA amplicons enables portable and simple biodiversity assessments with high phylogenetic resolution across broad taxonomic scale. In GigaScience (Vol. 8, Issue 5). Oxford University Press (OUP). https://doi.org/10.1093/gigascience/giz006
